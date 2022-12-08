@@ -6,12 +6,12 @@ import { auth, db } from '../../services/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollection } from 'react-firebase-hooks/firestore';
 
-const sidebarHeader = ({ setUserChat }) => {
+const SidebarHeader = ({ setUserChat }) => {
   const [user] = useAuthState(auth);
-  const refchat = db
+  const refChat = db
     .collection('chats')
     .where('users', 'array-contains', user.email);
-  const [chatSnapshot] = useCollection(refchat);
+  const [chatsSnapshot] = useCollection(refChat);
 
   const handleCreateChat = () => {
     const emailInput = prompt('Escreva o e-mail desejado');
@@ -21,18 +21,19 @@ const sidebarHeader = ({ setUserChat }) => {
     if (!EmailValidator.validate(emailInput)) {
       return alert('E-mail inválido!');
     } else if (emailInput === user.email) {
-      return alert('insira um e-mail diferente do seu!');
+      return alert('Insira um e-mail diferente do seu!');
     } else if (chatExists(emailInput)) {
       return alert('Chat já existe!');
     }
+
     db.collection('chats').add({
       users: [user.email, emailInput],
     });
   };
 
   const chatExists = (emailChat) => {
-    return !!chatSnapshot?.docs.find(
-      (chat) => chat.data().users.find((user) => user == emailChat)?.length > 0
+    return !!chatsSnapshot?.docs.find(
+      (chat) => chat.data().users.find((user) => user === emailChat)?.length > 0
     );
   };
 
@@ -51,4 +52,4 @@ const sidebarHeader = ({ setUserChat }) => {
   );
 };
 
-export default sidebarHeader;
+export default SidebarHeader;

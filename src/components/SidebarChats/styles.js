@@ -15,7 +15,7 @@ export const Container = styled.div`
   }
 `;
 
-export const content = styled.div``;
+export const Content = styled.div``;
 
 export const Divider = styled.div`
   margin: 0 10px;

@@ -7,19 +7,18 @@ import { MdPerson } from 'react-icons/md';
 const getUser = (users, userLogged) =>
   users?.filter((user) => user !== userLogged?.email)[0];
 
-const SidebarChatsItem = (id, users, user, setUserChat, active) => {
+const SidebarChatsItem = ({ id, users, user, setUserChat, active }) => {
   const [getUserItem] = useCollection(
     db.collection('users').where('email', '==', getUser(users, user))
   );
 
   const Avatar = getUserItem?.docs?.[0]?.data();
-  console.log(Avatar);
   const item = getUser(users, user);
 
   const handleNewChat = () => {
     const userChat = {
       chatId: id,
-      name: item.split('0')[0],
+      name: item.split('@')[0],
       photoURL: Avatar?.photoURL,
     };
 
@@ -28,7 +27,7 @@ const SidebarChatsItem = (id, users, user, setUserChat, active) => {
 
   return (
     <C.Container onClick={handleNewChat} className={active}>
-      {Avatar ? <C.Avatar scr={Avatar?.photoURL} /> : <MdPerson />}
+      {Avatar ? <C.Avatar src={Avatar?.photoURL} /> : <MdPerson />}
       <C.Name>{item.split('@')[0]}</C.Name>
     </C.Container>
   );
