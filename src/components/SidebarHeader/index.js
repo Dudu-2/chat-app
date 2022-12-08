@@ -14,28 +14,27 @@ const sidebarHeader = ({ setUserChat }) => {
   const [chatSnapshot] = useCollection(refchat);
 
   const handleCreateChat = () => {
-    const emailInput = prompt("Escreva o e-mail desejado")
+    const emailInput = prompt('Escreva o e-mail desejado');
 
-    if(!emailInput) return;
+    if (!emailInput) return;
 
     if (!EmailValidator.validate(emailInput)) {
-      return alert("E-mail inválido!");
+      return alert('E-mail inválido!');
     } else if (emailInput === user.email) {
-    return alert("insira um e-mail diferente do seu!");
-    }else if (chatExists(emailInput)){
-      return alert("Chat já existe!")
+      return alert('insira um e-mail diferente do seu!');
+    } else if (chatExists(emailInput)) {
+      return alert('Chat já existe!');
     }
-    db.collection("chats").add({
+    db.collection('chats').add({
       users: [user.email, emailInput],
     });
-    };
+  };
 
-    const chatExists = (emailChat) => {
-      return !!chatSnapshot?.docs.find(
-        (chat) => chat.data().users.find((user) => user == emailChat)
-      )
-    }
-  }
+  const chatExists = (emailChat) => {
+    return !!chatSnapshot?.docs.find(
+      (chat) => chat.data().users.find((user) => user == emailChat)?.length > 0
+    );
+  };
 
   return (
     <C.Container>

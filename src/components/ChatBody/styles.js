@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  height: calc(100vh - 70px);
+  flex: 1;
+  background-color: #efeae2;
   overflow-y: auto;
 
   &::-webkit-scrollbar {
@@ -13,11 +14,4 @@ export const Container = styled.div`
     border-radius: 10px;
     background-color: rgba(0, 0, 0, 0.2);
   }
-`;
-
-export const content = styled.div``;
-
-export const Divider = styled.div`
-  margin: 0 10px;
-  border-top: solid 1px #ddd;
 `;
