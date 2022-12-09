@@ -15,7 +15,7 @@ const App = () => {
     if (user) {
       db.collection('users').doc(user.uid).set({
         email: user.email,
-        photoURL: user.ṕhotoURL,
+        photoURL: user.photoURL,
       });
     }
   }, [user]);
